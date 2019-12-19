@@ -1,0 +1,25 @@
+{
+  "name": "jirabot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mariusz-kabala/jirabot.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mariusz-kabala/jirabot/issues"
+  },
+  "homepage": "https://github.com/mariusz-kabala/jirabot#readme",
+  "dependencies": {
+    "@rocket.chat/sdk": "^0.2.9-2",
+    "botkit": "^4.6.1",
+    "botkit-rocketchat-connector": "0.0.17",
+    "jira-client": "^6.14.0"
+  }
+}
