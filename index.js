@@ -50,8 +50,38 @@ const jira = new JiraAPI({
     //     console.log(issue.fields.status)
     //     break
     // }
-const res = await jira.searchJira('project = "GEOT" AND resolution = Unresolved AND createdDate > -4d ORDER BY priority DESC')
-    console.log(res.issues)
+    const results = {}
+
+const formatIssue = (issue, showAssign = false) => {
+  let formatted = ''
+  const parent = issue.fields.parent
+  
+  if (parent) {
+    formatted += `- [${parent.key}]`
+  }
+
+  formatted += `[${issue.key}] ${issue.fields.summary}`
+
+  if (showAssign) {
+    const assigned = issue.fields.assignee
+    formatted += ` (${assigned.key} ${assigned.displayName})`
+  }
+
+  return formatted
+}
+
+// created recently
+// const query = 'project = "GEOT" AND resolution = Unresolved AND createdDate > -4d ORDER BY priority DESC, issuetype ASC'
+// in progress
+const query = 'project = "GEOT" AND status = "In Progress" ORDER BY createdDate DESC, issuetype ASC'
+
+const res = await jira.searchJira(query)
+    for (const issue of res.issues) {
+      console.log(formatIssue(issue, true))
+      // console.log(issue.key + ' ' + issue.fields.summary)
+      // console.log(issue.fields.parent)
+    }
+    //console.log(JSON.stringify(res.issues))
   }
 
   start()
