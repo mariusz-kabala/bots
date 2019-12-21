@@ -1,4 +1,4 @@
-# sync with .prettierignore
+# sync with gitignore
 node_modules
 dist/
 build/
@@ -8,10 +8,6 @@ build/
 .DS_STORE
 .vscode
 coverage/
-report/
 yarn-error.log
 lerna-debug.log
-.envrc
-.env
-.npmrc
-package-lock.json
+CHANGELOG.md

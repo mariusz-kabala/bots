@@ -1,0 +1,33 @@
+{
+  "compilerOptions": {
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "allowUnusedLabels": false,
+    "allowUnreachableCode": false,
+    "noFallthroughCasesInSwitch": true,
+    "strict": true,
+    "module": "commonjs",
+    "esModuleInterop": true,
+    "isolatedModules": false,
+    "target": "es2017",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "declaration": true,
+    "removeComments": true,
+    "noLib": false,
+    "outDir": "dist/",
+    "types": ["node"],
+    "lib": ["es5", "es6", "es7", "es2015", "es2016", "es2017", "es2018", "esnext"],
+    "allowJs": false,
+    "inlineSources": true,
+    "inlineSourceMap": true,
+    "baseUrl": "./packages",
+    "paths": {
+      "@auto1/*": ["./*/src"]
+    }
+  },
+  "files": [],
+  "include": ["packages/**/*", "./*.ts", "./__mocks__/*.ts"],
+  "exclude": ["/node_modules/**/*"]
+}

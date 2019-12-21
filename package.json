@@ -2,9 +2,17 @@
   "name": "jirabot",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "private": true,
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ]
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "check-ts": "tsc --noEmit -p tsconfig.json",
+    "clean": "lerna clean --yes && rm -rf node_modules dist packages/*/dist packages/*/build",
+    "eslint": "eslint \"packages/**/*.ts\" --format friendly"
   },
   "repository": {
     "type": "git",
@@ -20,6 +28,49 @@
     "@rocket.chat/sdk": "^0.2.9-2",
     "botkit": "^4.6.1",
     "botkit-rocketchat-connector": "0.0.17",
+    "config": "^3.2.4",
     "jira-client": "^6.14.0"
+  },
+  "lint-staged": {
+    "**/*/CHANGELOG.md": [
+      "bash -c 'echo \"Do not change CHANGELOG.md files manually\" && exit 1'"
+    ],
+    "*.{js,jsx,ts,tsx}": [
+      "yarn eslint --fix"
+    ],
+    "*.{json,css,scss,md,js,jsx,ts,tsx}": [
+      "prettier --write",
+      "git add"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "./scripts/prepareCommit.sh",
+      "pre-commit": "lint-staged",
+      "pre-push": "yarn check-ts && yarn test:coverage"
+    }
+  },
+  "engines": {
+    "node": "12",
+    "yarn": "1"
+  },
+  "devDependencies": {
+    "@types/config": "^0.0.36",
+    "@typescript-eslint/eslint-plugin": "^2.12.0",
+    "@typescript-eslint/parser": "^2.12.0",
+    "dotenv": "^8.2.0",
+    "eslint-config-prettier": "^6.7.0",
+    "eslint-formatter-friendly": "^7.0.0",
+    "eslint-plugin-import": "^2.19.1",
+    "eslint-plugin-jest": "^23.1.1",
+    "eslint-plugin-prettier": "^3.1.2",
+    "husky": "^3.1.0",
+    "jest": "^24.9.0",
+    "jest-fetch-mock": "^3.0.0",
+    "lerna": "^3.19.0",
+    "lint-staged": "^9.5.0",
+    "prettier": "^1.19.1",
+    "ts-jest": "^24.2.0",
+    "typescript": "^3.7.3"
   }
 }
