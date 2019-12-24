@@ -1,10 +1,9 @@
 declare namespace NodeJS {
   export interface ProcessEnv {
-    HOST: string
-    USER: string
-    PASS: string
-    BOTNAME: string
-    SSL: string
-    ROOMS: string
+    RC_HOST: string
+    RC_USER: string
+    RC_PASS: string
+    RC_SSL: string
+    RC_ROOMS: string
   }
 }

@@ -1,26 +1,26 @@
 import { driver } from '@rocket.chat/sdk'
-import { logger } from '@bots/logger'
-import { IAsteroid } from '@rocket.chat/sdk/dist/config/asteroidInterfaces'
-import { processMessages } from './processMessages'
+import { logger } from '@libs/logger'
 import config from 'config'
 
+import { processMessages } from './processMessages'
+import { splitText } from './helpers/message'
+
 const RECONNECT_TIMEOUT = 300000
-let connect_attempts = 0
+let connectAttempts = 0
 let botUserId: string
 
 async function runBot(): Promise<void> {
-  let conn: IAsteroid
   const host: string = config.get<string>('RCHost')
   const rooms: string = config.get<string>('RCRooms')
 
-  connect_attempts++
+  connectAttempts++
 
-  if (connect_attempts > 3) {
+  if (connectAttempts > 3) {
     process.exit(1)
   }
 
   try {
-    conn = await driver.connect({
+    await driver.connect({
       host,
       useSsl: !!config.get<string>('RCSSL'),
     })
@@ -48,16 +48,19 @@ async function runBot(): Promise<void> {
       level: 'error',
       message: `Bot was not able to join rooms ${rooms}, next try in 5min. Error ${err}`,
     })
-    await conn.disconnect()
+    await driver.disconnect()
     setTimeout(runBot, RECONNECT_TIMEOUT)
   }
 
+  await driver.subscribeToMessages()
+
   try {
+    // eslint-disable-next-line
     await driver.reactToMessages(async (err: Error | null, message: any) => {
       if (err) {
         logger.log({
           level: 'error',
-          message: err + '',
+          message: `${err}`,
         })
         return
       }
@@ -68,17 +71,22 @@ async function runBot(): Promise<void> {
 
       const botname = config.get<string>('RCBotname')
 
-      if (!message.msg.startWith(botname)) {
+      if (!message.msg.startsWith(botname)) {
         return
       }
 
-      message.msg = message.msg.toLowerCase().str.substring(botname.length)
+      message.msg = message.msg
+        .toLowerCase()
+        .substring(botname.length)
+        .trim()
 
       const response = await processMessages(message)
       const roomname = await driver.getRoomId(message.rid)
 
       try {
-        await driver.sendToRoomId(response, roomname)
+        for (const msg of splitText(response)) {
+          await driver.sendToRoomId(msg, roomname)
+        }
       } catch (err) {
         logger.log({
           level: 'error',
@@ -91,7 +99,7 @@ async function runBot(): Promise<void> {
       level: 'error',
       message: `Bot was not able to subscribe for messages, next try in 5min. Error ${err}`,
     })
-    await conn.disconnect()
+    await driver.disconnect()
     setTimeout(runBot, RECONNECT_TIMEOUT)
   }
 }

@@ -2,7 +2,10 @@ const dotenv = require('dotenv')
 dotenv.config()
 
 module.exports = {
-  users: {},
+  users: {
+    marduk: 'admin',
+    ra8ga: 'rafal.furmaga',
+  },
   RCHost: process.env.RC_HOST,
   RCUser: process.env.RC_USER,
   RCPass: process.env.RC_PASS,
