@@ -6,6 +6,51 @@ module.exports = {
     marduk: 'admin',
     ra8ga: 'rafal.furmaga',
   },
+  workflow: {
+    '711': {
+      // backlog
+      '721': {
+        // select for development
+        '731': {
+          // open the issue
+          '4': {
+            // in progress
+            '5': null,
+            '2': null,
+          },
+          '5': {
+            // resolved
+            '701': null, // close
+            '3': null, // reopen
+            '711': null,
+          },
+          '2': {
+            // closed
+            '711': null,
+          },
+        },
+      },
+    },
+  },
+  statusToTransition: {
+    Backlog: '711',
+    'In progress': '4',
+    Done: '5',
+  },
+  statusToStatusCategory: {
+    Backlog: 'new',
+    'Selected for Development': 'new',
+    Open: 'new',
+    'In progress': 'indeterminate',
+    Done: 'done',
+  },
+  issueTypes: {
+    bug: 10004,
+    story: 10001,
+    epic: 10000,
+    task: 10002,
+    subtask: 10003,
+  },
   RCHost: process.env.RC_HOST,
   RCUser: process.env.RC_USER,
   RCPass: process.env.RC_PASS,

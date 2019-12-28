@@ -1,14 +1,28 @@
+import { TICKET_REGEXR } from './constants'
+import { IRCMessage } from './types'
 import { showCommand } from './commands/show'
+import { statusCommand } from './commands/status'
+import { createCommand } from './commands/create'
+import { updateCommand } from './commands/update'
+
 const meReg = /\b(me|mine|i|my)\b/gi
 
 // eslint-disable-next-line
-export function processMessages(message: any): Promise<string> {
-  const msg = message.msg.replace(meReg, message.u.username)
+export function processMessages(message: IRCMessage): Promise<string> {
+  const msg: string = message.msg.replace(meReg, message.u.username)
 
-  if (msg.includes('show')) {
-    return showCommand(msg)
+  if (TICKET_REGEXR.exec(msg)) {
+    return updateCommand(msg)
   }
 
-  // @todo add something like sorry, I don't understand that, try: [help here]
-  return Promise.resolve('Invalid command')
+  if (msg.includes('status')) {
+    return statusCommand(msg)
+  }
+
+  if (['create', 'add'].some(command => msg.includes(command))) {
+    return createCommand(msg, message.u)
+  }
+
+  // if there is no proper query from showCOmmand but should show help
+  return showCommand(msg)
 }

@@ -1,23 +1,17 @@
 import { IJQLParams, ISSUE_STATUS, TIME_FIELDS, jira, buildQuery, formatIssue } from '@libs/jira'
 import config from 'config'
+import { logger } from '@libs/logger'
 
-type IStatusMapper = {
-  [key in ISSUE_STATUS]: string[]
-}
-
-const statusesMapper: IStatusMapper = {
-  [ISSUE_STATUS.backlog]: ['backlog'],
-  [ISSUE_STATUS.inProgress]: ['progress', 'work', 'working', 'doing'],
-  [ISSUE_STATUS.done]: ['done', 'did', 'finished', 'closed'],
-}
+import { statusesMapper } from '../constants'
 
 type IMapper = {
   [key: string]: string[]
 }
 
 const timeMapper: IMapper = {
-  '7d': ['week'],
-  '1d': ['yesterday'],
+  '-7d': ['week'],
+  '-1d': ['today'],
+  '-2d': ['yesterday'],
 }
 
 const timeFieldMapper: IMapper = {
@@ -28,15 +22,25 @@ const timeFieldMapper: IMapper = {
 function getTimeFields(msg: string): Partial<IJQLParams> {
   const result: Partial<IJQLParams> = {}
 
+  const timeField: TIME_FIELDS =
+    (Object.keys(timeFieldMapper).find(timeValue =>
+      timeFieldMapper[timeValue].some((txt: string) => msg.includes(txt)),
+    ) as TIME_FIELDS) || TIME_FIELDS.updated
+
+  if (!timeField) {
+    return result
+  }
+
   const time = Object.keys(timeMapper).find(timeValue => timeMapper[timeValue].some((txt: string) => msg.includes(txt)))
 
   if (time) {
-    const timeField: TIME_FIELDS =
-      (Object.keys(timeFieldMapper).find(timeValue =>
-        timeFieldMapper[timeValue].some((txt: string) => msg.includes(txt)),
-      ) as TIME_FIELDS) || TIME_FIELDS.updated
-
     result[timeField] = time
+  } else {
+    const reg = /([0-9]+)(.+day(s?))/.exec(msg)
+
+    if (reg) {
+      result[timeField] = `-${reg[1]}d`
+    }
   }
 
   return result
@@ -62,7 +66,14 @@ export function getParams(msg: string): IJQLParams {
 }
 
 export async function showCommand(msg: string): Promise<string> {
-  const data = await jira.searchJira(buildQuery(getParams(msg)))
+  const params = getParams(msg)
+
+  logger.log({
+    level: 'info',
+    message: `JIRA query params: ${JSON.stringify(params)}`,
+  })
+
+  const data = await jira.searchJira(buildQuery(params))
 
   let response = ''
 

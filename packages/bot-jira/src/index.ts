@@ -2,6 +2,7 @@ import { driver } from '@rocket.chat/sdk'
 import { logger } from '@libs/logger'
 import config from 'config'
 
+import { IRCMessage } from './types'
 import { processMessages } from './processMessages'
 import { splitText } from './helpers/message'
 
@@ -56,7 +57,7 @@ async function runBot(): Promise<void> {
 
   try {
     // eslint-disable-next-line
-    await driver.reactToMessages(async (err: Error | null, message: any) => {
+    await driver.reactToMessages(async (err: Error | null, message: IRCMessage) => {
       if (err) {
         logger.log({
           level: 'error',

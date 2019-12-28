@@ -1,8 +1,9 @@
 import { link } from '@libs/markdown'
 
+import { IJiraIssue } from './types'
+
 export function formatIssue(
-  // eslint-disable-next-line
-  issue: any,
+  issue: IJiraIssue,
   params: {
     showAssign?: boolean
     host: string
@@ -20,7 +21,7 @@ export function formatIssue(
 
   if (showAssign) {
     const assigned = issue.fields.assignee
-    formatted += ` (${assigned.key} ${assigned.displayName})`
+    formatted += ` ( __${assigned.displayName}__ )`
   }
 
   return formatted

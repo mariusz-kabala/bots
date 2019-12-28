@@ -8,6 +8,10 @@ jest.mock('@libs/jira', () => ({
     inProgress: 'inProgress',
     done: 'done',
   },
+  TIME_FIELDS: {
+    created: 'created',
+    updated: 'updated',
+  },
 }))
 
 describe('Show command', () => {
@@ -66,8 +70,17 @@ describe('Show command', () => {
     const params = getParams('Show tickets created this week')
 
     expect(params).toHaveProperty('created')
-    expect(params.created).toBe('7d')
+    expect(params.created).toBe('-7d')
 
     expect(params).not.toHaveProperty('updated')
+  })
+
+  it('Should have updated filed equal 1d', () => {
+    const params = getParams('Show tickets updated yesterday')
+
+    expect(params).toHaveProperty('updated')
+    expect(params.updated).toBe('-2d')
+
+    expect(params).not.toHaveProperty('created')
   })
 })

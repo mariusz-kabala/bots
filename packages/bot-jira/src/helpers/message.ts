@@ -15,5 +15,9 @@ export function splitText(str: string, width = 1500): string[] {
     current += `${txt}\n`
   }
 
+  if (current !== '') {
+    results.push(current)
+  }
+
   return results
 }

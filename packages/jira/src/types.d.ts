@@ -8,3 +8,25 @@ export interface IJQLParams {
   [TIME_FIELDS.created]?: string
   [TIME_FIELDS.updated]?: string
 }
+
+export interface IJiraIssue {
+  key: string
+  fields: {
+    status: {
+      statusCategory: {
+        key: 'new' | 'indeterminate' | 'done'
+      }
+    }
+    summary: string
+    parent?: {
+      key: string
+      fields: {
+        summary: string
+      }
+    }
+    assignee: {
+      key: string
+      displayName: string
+    }
+  }
+}
