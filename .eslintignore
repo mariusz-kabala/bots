@@ -1,0 +1,8 @@
+dist
+*.d.ts
+node_modules
+deploy-script
+deploy-script.js
+config
+rollup.config.js
+jest.config.js

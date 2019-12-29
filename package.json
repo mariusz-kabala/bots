@@ -1,0 +1,89 @@
+{
+  "name": "jirabot",
+  "version": "1.0.0",
+  "description": "",
+  "private": true,
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ]
+  },
+  "scripts": {
+    "test": "jest",
+    "check-ts": "tsc --noEmit -p tsconfig.json",
+    "clean": "lerna clean --yes && rimraf dist packages/*/dist packages/*/build node_modules",
+    "eslint": "eslint \"packages/**/*.ts\" --format friendly"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mariusz-kabala/jirabot.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mariusz-kabala/jirabot/issues"
+  },
+  "homepage": "https://github.com/mariusz-kabala/jirabot#readme",
+  "dependencies": {
+    "@rocket.chat/sdk": "^0.2.9-2",
+    "botkit": "^4.6.1",
+    "botkit-rocketchat-connector": "0.0.17",
+    "config": "^3.2.4",
+    "jira-client": "^6.14.0"
+  },
+  "lint-staged": {
+    "**/*/CHANGELOG.md": [
+      "bash -c 'echo \"Do not change CHANGELOG.md files manually\" && exit 1'"
+    ],
+    "*.{js,jsx,ts,tsx}": [
+      "yarn eslint --fix"
+    ],
+    "*.{json,css,scss,md,js,jsx,ts,tsx}": [
+      "prettier --write",
+      "git add"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "pre-push": "yarn check-ts"
+    }
+  },
+  "engines": {
+    "node": "12",
+    "yarn": "1"
+  },
+  "devDependencies": {
+    "@types/config": "^0.0.36",
+    "@types/jest": "^24.0.24",
+    "@types/jira-client": "^6.13.1",
+    "@types/node": "^13.1.0",
+    "@typescript-eslint/eslint-plugin": "^2.12.0",
+    "@typescript-eslint/parser": "^2.12.0",
+    "concurrently": "^5.0.2",
+    "dotenv": "^8.2.0",
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.7.0",
+    "eslint-formatter-friendly": "^7.0.0",
+    "eslint-plugin-import": "^2.19.1",
+    "eslint-plugin-jest": "^23.1.1",
+    "eslint-plugin-prettier": "^3.1.2",
+    "husky": "^3.1.0",
+    "jest": "^24.9.0",
+    "jest-fetch-mock": "^3.0.0",
+    "lerna": "^3.19.0",
+    "lint-staged": "^9.5.0",
+    "nodemon": "^2.0.2",
+    "prettier": "^1.19.1",
+    "rimraf": "^3.0.0",
+    "rollup": "^1.27.13",
+    "rollup-plugin-auto-external": "^2.0.0",
+    "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-node-builtins": "^2.1.2",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-typescript": "^1.0.1",
+    "rollup-plugin-typescript2": "^0.25.3",
+    "ts-jest": "^24.2.0",
+    "typescript": "^3.7.3"
+  }
+}

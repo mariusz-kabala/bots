@@ -1,0 +1,17 @@
+# sync with .prettierignore
+node_modules
+dist/
+build/
+
+.idea
+.DS_Store
+.DS_STORE
+.vscode
+coverage/
+report/
+yarn-error.log
+lerna-debug.log
+.envrc
+.env
+.npmrc
+package-lock.json
