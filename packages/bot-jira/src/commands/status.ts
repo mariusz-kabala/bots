@@ -26,10 +26,10 @@ function sortData(issues: IJiraIssue[]): sortedIssues {
   return results
 }
 
-function printIssues(issues: IJiraIssue[], showAssign = true): string {
+function printIssues(issues: IJiraIssue[], showAssign = true, printedIssuesLimit = 10): string {
   let result = ''
 
-  for (const issue of issues) {
+  for (const issue of issues.slice(0, printedIssuesLimit)) {
     result += `${formatIssue(issue, {
       showAssign,
       host: config.get<string>('JiraHost'),
@@ -39,12 +39,17 @@ function printIssues(issues: IJiraIssue[], showAssign = true): string {
   return result
 }
 
-async function getTicekts(time: string, msg: string): Promise<string> {
+async function getTicekts(msg: string, time?: string): Promise<string> {
   const users = config.get<{ [key: string]: string }>('users')
   const params: IJQLParams = {
     project: 'GEOT',
     unresolved: true,
-    [TIME_FIELDS.updated]: time,
+  }
+  const printedIssuesLimit = 10
+  const printedIssuesLimitMsg = `\n__Only last ${printedIssuesLimit} issues have been printed__\n\n`
+
+  if (time) {
+    params[TIME_FIELDS.updated] = time
   }
 
   const user = Object.keys(users).find(user => msg.includes(user))
@@ -69,15 +74,36 @@ async function getTicekts(time: string, msg: string): Promise<string> {
     message += `:watch: *IN PROGRESS* (${sorted.indeterminate.length} / ${total})\n${printIssues(
       sorted.indeterminate,
       showAssign,
+      printedIssuesLimit,
     )}\n`
+
+    if (sorted.indeterminate.length > printedIssuesLimit) {
+      message += printedIssuesLimitMsg
+    }
   }
 
   if (sorted.new.length > 0) {
-    message += `:new: *NEW* (${sorted.new.length} / ${total})\n${printIssues(sorted.new, showAssign)}\n`
+    message += `:new: *NEW* (${sorted.new.length} / ${total})\n${printIssues(
+      sorted.new,
+      showAssign,
+      printedIssuesLimit,
+    )}\n`
+
+    if (sorted.new.length > printedIssuesLimit) {
+      message += printedIssuesLimitMsg
+    }
   }
 
   if (sorted.done.length > 0) {
-    message += `:man_cartwheeling: *DONE* (${sorted.done.length} / ${total})\n${printIssues(sorted.done, showAssign)}`
+    message += `:man_cartwheeling: *DONE* (${sorted.done.length} / ${total})\n${printIssues(
+      sorted.done,
+      showAssign,
+      printedIssuesLimit,
+    )}`
+
+    if (sorted.done.length > printedIssuesLimit) {
+      message += printedIssuesLimitMsg
+    }
   }
 
   if (message !== '') {
@@ -101,16 +127,20 @@ async function getTicekts(time: string, msg: string): Promise<string> {
 
 export function statusCommand(msg: string): Promise<string> {
   if (msg.includes('yesterday')) {
-    return getTicekts('-2d', msg)
+    return getTicekts(msg, '-2d')
   }
 
   if (msg.includes('week')) {
-    return getTicekts('-1w', msg)
+    return getTicekts(msg, '-1w')
   }
 
   if (msg.includes('month')) {
-    return getTicekts('-4w', msg)
+    return getTicekts(msg, '-4w')
   }
 
-  return getTicekts('-1d', msg)
+  if (msg.includes('day')) {
+    return getTicekts(msg, '-1d')
+  }
+
+  return getTicekts(msg)
 }

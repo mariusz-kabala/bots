@@ -24,5 +24,5 @@ export function formatIssue(
     formatted += ` ( __${assigned.displayName}__ )`
   }
 
-  return formatted
+  return formatted.trim()
 }
