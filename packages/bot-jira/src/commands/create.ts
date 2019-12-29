@@ -1,7 +1,6 @@
 import { ISSUE_TYPES, jira } from '@libs/jira'
+import { IRCUser } from '@libs/types'
 import config from 'config'
-
-import { IRCUser } from '../types'
 
 export function getTicketSummary(msg: string, issueType: ISSUE_TYPES) {
   let delimiter = ['-', ':'].find(d => msg.includes(d))
