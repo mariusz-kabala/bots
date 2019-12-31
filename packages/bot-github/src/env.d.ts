@@ -5,5 +5,6 @@ declare namespace NodeJS {
     RC_PASS: string
     RC_SSL: string
     RC_ROOMS: string
+    GITHUB_TOKEN: string
   }
 }

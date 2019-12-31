@@ -8,4 +8,5 @@ module.exports = {
   RCBotname: '@github',
   RCSSL: process.env.RC_SSL,
   RCRooms: process.env.RC_ROOMS,
+  gitHubToken: process.env.GITHUB_TOKEN,
 }

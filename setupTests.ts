@@ -4,7 +4,9 @@ jest.mock('config', () => ({
     get: jest.fn((key: string) => {
       switch (key) {
         case 'users':
-          return {}
+          return {
+            marduk: 'admin',
+          }
         default:
           return ''
       }
