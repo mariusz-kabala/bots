@@ -1,6 +1,6 @@
 {
   "name": "@libs/markdown",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "private": true,
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
@@ -9,6 +9,5 @@
     "build": "rollup -c ../../rollup.config.js",
     "build-declarations": "tsc --declaration --emitDeclarationOnly --out dist/index.d.ts",
     "prepare": "yarn build && yarn build-declarations"
-  },
-  "dependencies": {}
+  }
 }
