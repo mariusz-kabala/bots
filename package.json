@@ -34,9 +34,6 @@
     "redis": "^2.8.0"
   },
   "lint-staged": {
-    "**/*/CHANGELOG.md": [
-      "bash -c 'echo \"Do not change CHANGELOG.md files manually\" && exit 1'"
-    ],
     "*.{js,jsx,ts,tsx}": [
       "yarn eslint --fix"
     ],
