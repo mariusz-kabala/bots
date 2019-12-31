@@ -61,7 +61,7 @@ pipeline {
                 script {
                     sh "npm i -g lerna"
                     sh "yarn install --ignore-scripts"
-                    sh "lerna postinstall"
+                    sh "lerna run postinstall"
                 }
             }
         }
