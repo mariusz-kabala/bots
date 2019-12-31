@@ -80,5 +80,25 @@ pipeline {
                 }
             }
         }
+
+        stage ('Deploy') {
+            when {
+                expression {
+                    env.deploy == true
+                }
+            }
+            script {
+                    def packagesList = packages.split(',')
+                    packagesList.each{
+                        def props = readJSON file: "packages/${it}/package.json"
+
+                        build job: '(BOTS) Deploy', wait: false, parameters: [
+                            string(name: 'ghprbActualCommit', value: "${ghprbActualCommit}"),
+                            string(name: 'package', value: "${it}"),
+                            string(name: 'version', value: "v${props.version}"),
+                        ]
+                    }
+            }
+        }
     }
 }
