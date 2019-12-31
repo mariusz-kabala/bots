@@ -72,7 +72,7 @@ pipeline {
                     def packagesList = packages.split(',')
                     packagesList.each{
                         def props = readJSON file: "packages/${it}/package.json"
-                        def currentApp = docker.build(props['name'], "-f packages/${it}/Dockerfile .")
+                        def currentApp = docker.build(props['name'].replace('@', ''), "-f packages/${it}/Dockerfile .")
                         docker.withRegistry('https://docker-registry.kabala.tech', 'docker-registry-credentials') {
                             currentApp.push("v${props['version']}")
                             currentApp.push("latest")
