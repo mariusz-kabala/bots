@@ -57,14 +57,6 @@ pipeline {
                     ])
             }
         }
-        stage ('Install dependencies') {
-            steps {
-                script {
-                    sh "npm i -g lerna"
-                    sh "yarn"
-                }
-            }
-        }
         stage ('Build Containers') {
             agent any
              steps {
@@ -83,7 +75,7 @@ pipeline {
         stage ('Deploy') {
             when {
                 expression {
-                    env.deploy == true
+                    env.deploy == 'true'
                 }
             }
             steps {
