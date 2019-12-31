@@ -4,6 +4,8 @@ pipeline {
     agent { docker { image 'docker-registry.kabala.tech/alpine-terraform:latest' } }
     
     environment {
+        AWS_ACCESS_KEY_ID = credentials('SCALEWAY_S3_ACCESS_KEY')
+        AWS_SECRET_ACCESS_KEY = credentials('SCALEWAY_S3_ACCESS_SECRET_KEY')
         RC_PASS = credentials('jira-bot-rocket-chat-pass')
         JIRA_USERNAME = credentials('jira-username')
         JIRA_PASSWORD = credentials('jira-token')
