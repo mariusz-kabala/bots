@@ -14,6 +14,7 @@ pipeline {
         stage ('prepare') {
             steps {
                 script {
+                    sh "printenv"
                     try {
                         branch = env.GIT_LOCAL_BRANCH
                         branch = branch ?: env.GIT_BRANCH
