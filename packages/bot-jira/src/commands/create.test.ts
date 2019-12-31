@@ -1,6 +1,7 @@
-import { createCommand } from './create'
 import { jira } from '@libs/jira'
 import config from 'config'
+
+import { createCommand } from './create'
 
 jest.mock('@libs/jira', () => ({
   ISSUE_TYPES: {

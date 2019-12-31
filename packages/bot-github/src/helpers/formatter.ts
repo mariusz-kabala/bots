@@ -1,4 +1,5 @@
 import { link } from '@libs/markdown'
+
 import { IPullRequest } from '../types'
 
 export function formatPRsList(prs: IPullRequest[]): string {
