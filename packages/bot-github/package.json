@@ -1,5 +1,5 @@
 {
-  "name": "@bots/jira",
+  "name": "@bots/github",
   "version": "0.0.1",
   "private": true,
   "main": "./dist/index.js",
@@ -7,14 +7,15 @@
     "build": "rollup -c ../../rollup.config.js",
     "build-declarations": "tsc --declaration --emitDeclarationOnly --out dist/index.d.ts",
     "watch": "rollup -w -c ../../rollup.config.js",
-    "dev": "concurrently \"yarn workspace @bots/jira watch\" \"nodemon dist/index.js\"",
+    "dev": "concurrently \"yarn workspace @bots/github watch\" \"nodemon dist/index.js\"",
     "start": "node dist/index.js",
     "prepare": "yarn build && yarn build-declarations"
   },
   "dependencies": {
     "@libs/logger": "0.0.1",
-    "@libs/jira": "0.0.1",
+    "github-api": "^3.3.0",
     "@libs/types": "0.0.1",
-    "@libs/tools": "0.0.1"
+    "@libs/tools": "0.0.1",
+    "@libs/markdown": "0.0.1"
   }
 }

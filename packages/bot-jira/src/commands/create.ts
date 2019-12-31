@@ -1,7 +1,6 @@
 import { ISSUE_TYPES, jira } from '@libs/jira'
+import { IRCUser } from '@libs/types'
 import config from 'config'
-
-import { IRCUser } from '../types'
 
 export function getTicketSummary(msg: string, issueType: ISSUE_TYPES) {
   let delimiter = ['-', ':'].find(d => msg.includes(d))
@@ -9,7 +8,7 @@ export function getTicketSummary(msg: string, issueType: ISSUE_TYPES) {
   if (!delimiter && msg.includes(issueType)) {
     delimiter = issueType
   } else {
-    delimiter = ['ticket', 'create', 'add'].find(d => msg.includes(d))
+    delimiter = ['-', ':', 'ticket', 'create', 'add'].find(d => msg.includes(d))
   }
 
   if (!delimiter && !msg.includes(issueType)) {
@@ -35,8 +34,8 @@ export async function createCommand(msg: string, author: IRCUser): Promise<strin
     ISSUE_TYPES.bug,
     ISSUE_TYPES.epic,
     ISSUE_TYPES.story,
+    ISSUE_TYPES.subtask, // order here is important
     ISSUE_TYPES.task,
-    ISSUE_TYPES.subtask,
   ].find(type => msgToProcess.includes(type))
 
   if (!issueType) {
@@ -52,14 +51,13 @@ export async function createCommand(msg: string, author: IRCUser): Promise<strin
     [key in ISSUE_TYPES]: number
   } = config.get('issueTypes')
   let RCUser = Object.keys(users).find(user => msgToProcess.includes(user))
-
   if (!RCUser) {
     RCUser = author.username
   }
 
   const user = users[RCUser] // map from RCUser to JIRAUser
 
-  msgToProcess = msgToProcess.replace(new RegExp(`assign.*?${RCUser}`, 'gi'), '')
+  msgToProcess = msgToProcess.replace(new RegExp(`,?(and )?assign.*?${RCUser}`, 'gi'), '')
 
   const summary = getTicketSummary(msgToProcess, issueType)
 

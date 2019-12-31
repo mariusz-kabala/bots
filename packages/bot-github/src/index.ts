@@ -71,15 +71,18 @@ async function runBot(): Promise<void> {
       }
 
       const botname = config.get<string>('RCBotname')
+      const directMsgRoomId = await driver.getDirectMessageRoomId(message.u.username)
 
-      if (!message.msg.startsWith(botname)) {
+      if (!message.msg.startsWith(botname) && message.rid !== directMsgRoomId) {
         return
       }
 
-      message.msg = message.msg
-        .toLowerCase()
-        .substring(botname.length)
-        .trim()
+      if (message.msg.startsWith(botname)) {
+        message.msg = message.msg
+          .toLowerCase()
+          .substring(botname.length)
+          .trim()
+      }
 
       const response = await processMessages(message)
       const roomname = await driver.getRoomId(message.rid)

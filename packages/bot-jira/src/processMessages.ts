@@ -1,5 +1,6 @@
+import { IRCMessage } from '@libs/types'
+
 import { TICKET_REGEXR } from './constants'
-import { IRCMessage } from './types'
 import { showCommand } from './commands/show'
 import { statusCommand } from './commands/status'
 import { createCommand } from './commands/create'
@@ -7,7 +8,6 @@ import { updateCommand } from './commands/update'
 
 const meReg = /\b(me|mine|i|my)\b/gi
 
-// eslint-disable-next-line
 export function processMessages(message: IRCMessage): Promise<string> {
   const msg: string = message.msg.replace(meReg, message.u.username)
 
