@@ -74,13 +74,19 @@ pipeline {
                 }
             }
         }
-        stage ('Build Containers') {
-            agent any
+        stage ('Build & Deploy') {
+            when {
+                expression {
+                    env.build == 'true'
+                }
+            }
              steps {
                 script {
-                    packages.each{
-                        sh "echo ${it}"
-                    }
+                    build job: '(BOTS) Build', wait: false, parameters: [
+                        string(name: 'ghprbActualCommit', value: "${ghprbActualCommit}"),
+                        string(name: 'packages', value: "${env.packages}"),
+                        string(name: 'deploy', value: "v${env.deploy}"),
+                    ]
                 }
             }
         }
