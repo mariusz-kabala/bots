@@ -69,7 +69,6 @@ pipeline {
                 script {
                     sshagent(['jenkins-ssh-key']) {
                         sh "git checkout ${branch}"
-                        sh "git pull"
                         sh "lerna version --no-commit-hooks"
                     }
                 }
