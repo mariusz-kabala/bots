@@ -1,6 +1,6 @@
 {
   "name": "@libs/jira",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
@@ -12,7 +12,7 @@
     "postinstall": "yarn prepare"
   },
   "dependencies": {
-    "@libs/logger": "0.1.0",
-    "@libs/markdown": "0.1.0"
+    "@libs/logger": "0.1.1",
+    "@libs/markdown": "0.1.1"
   }
 }
