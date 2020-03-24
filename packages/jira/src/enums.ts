@@ -2,6 +2,7 @@ export enum ISSUE_STATUS {
   backlog = 'Backlog',
   inProgress = 'In progress',
   done = 'Done',
+  closed = 'Closed',
 }
 
 export enum ISSUE_TYPES {

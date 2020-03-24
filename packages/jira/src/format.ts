@@ -7,17 +7,22 @@ export function formatIssue(
   params: {
     showAssign?: boolean
     host: string
+    showParent?: boolean
+    prefix?: string
   },
 ) {
-  const { showAssign = false, host } = params
+  const { showAssign = false, showParent = false, prefix = '', host } = params
   let formatted = ''
   const { parent } = issue.fields
+  const isDone = issue.fields.status.statusCategory.key === 'done'
 
-  if (parent) {
+  if (parent && showParent) {
     formatted += `[${link(`${host}/${parent.key}`, parent.key)}] __${[parent.fields.summary]}__\n  - `
   }
 
-  formatted += `[${link(`${host}/${issue.key}`, issue.key)}] ${issue.fields.summary}`
+  formatted += `${prefix}${isDone ? '~' : ''}[${link(`${host}/${issue.key}`, issue.key)}]${isDone ? '~' : ''} ${
+    issue.fields.summary
+  }`
 
   if (showAssign) {
     const assigned = issue.fields.assignee

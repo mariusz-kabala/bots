@@ -56,6 +56,10 @@ export function getParams(msg: string): IJQLParams {
     ...getTimeFields(msg),
   }
 
+  if (params.status === ISSUE_STATUS.done) {
+    params.status = [ISSUE_STATUS.done, ISSUE_STATUS.closed]
+  }
+
   const user = Object.keys(users).find(user => msg.includes(user))
 
   if (user) {

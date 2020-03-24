@@ -8,7 +8,11 @@ export function buildQuery(params: IJQLParams): string {
   let query = `project = "${project}"`
 
   if (status) {
-    query += ` AND status = "${status}"`
+    if (Array.isArray(status)) {
+      query += ` AND status in (${status.join(',')})`
+    } else {
+      query += ` AND status = "${status}"`
+    }
   }
 
   if (user) {

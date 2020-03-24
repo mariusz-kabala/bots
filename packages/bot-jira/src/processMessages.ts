@@ -5,6 +5,7 @@ import { showCommand } from './commands/show'
 import { statusCommand } from './commands/status'
 import { createCommand } from './commands/create'
 import { updateCommand } from './commands/update'
+import { sprintCommand } from './commands/sprint'
 
 const meReg = /\b(me|mine|i|my)\b/gi
 
@@ -17,6 +18,10 @@ export function processMessages(message: IRCMessage): Promise<string> {
 
   if (msg.includes('status')) {
     return statusCommand(msg)
+  }
+
+  if (msg.includes('sprint')) {
+    return sprintCommand(msg)
   }
 
   if (['create', 'add'].some(command => msg.includes(command))) {

@@ -8,8 +8,7 @@
   "scripts": {
     "build": "rollup -c ../../rollup.config.js",
     "build-declarations": "tsc --declaration --emitDeclarationOnly --out dist/index.d.ts",
-    "prepare": "yarn build && yarn build-declarations",
-    "postinstall": "yarn prepare"
+    "prepare": "yarn build && yarn build-declarations"
   },
   "dependencies": {
     "@libs/logger": "0.1.1",

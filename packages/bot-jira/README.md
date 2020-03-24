@@ -1,6 +1,6 @@
 # @bots/jira
 
-Bot currently working only with Rocket Chat to integrate JIRA
+Bot currently working only with Rocket Chat; to integrate JIRA
 
 ## Commands
 
