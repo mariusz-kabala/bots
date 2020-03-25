@@ -16,6 +16,6 @@ resource "docker_container" "bot-jira" {
       "JIRA_USERNAME=${var.JIRA_USERNAME}",
       "JIRA_PASSWORD=${var.JIRA_PASSWORD}",
       "JIRA_API_VERSION=2",
-      "DAILY_REPORT_UPDATE_TIME=00 25 10 * * 1-5"
+      "DAILY_REPORT_UPDATE_TIME=00 05 09 * * 1-5"
   ]
 }

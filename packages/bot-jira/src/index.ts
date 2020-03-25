@@ -63,8 +63,15 @@ async function runBot(): Promise<void> {
       message: `Sending daily report to the channel`,
     })
     const report = await reportCommand()
-    const roomname = await driver.getRoomId('N8nNfiAAzFkbh3jye')
-    await driver.sendToRoomId(report, roomname)
+
+    await Promise.all(
+      config.get<string[]>('dailyReportChannels').map((channel: string) => driver.sendToRoomId(report, channel)),
+    )
+
+    logger.log({
+      level: 'info',
+      message: `daily report has been sent`,
+    })
   })
 
   try {
