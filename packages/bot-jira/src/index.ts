@@ -57,9 +57,14 @@ async function runBot(): Promise<void> {
 
   await driver.subscribeToMessages()
 
-  cron.schedule('00 05 09 * * 1-5', async () => {
+  cron.schedule('00 20 09 * * 1-5', async () => {
+    logger.log({
+      level: 'info',
+      message: `Sending daily report to the channel`,
+    })
     const report = await reportCommand()
-    await driver.sendToRoomId(report, 'N8nNfiAAzFkbh3jye')
+    const roomname = await driver.getRoomId('N8nNfiAAzFkbh3jye')
+    await driver.sendToRoomId(report, roomname)
   })
 
   try {
