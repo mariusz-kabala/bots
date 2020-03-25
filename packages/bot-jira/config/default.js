@@ -63,4 +63,5 @@ module.exports = {
   JiraPassword: process.env.JIRA_PASSWORD,
   JiraAPIVersion: process.env.JIRA_API_VERSION || '2',
   JiraStrictSSL: true,
+  dailyReportUpdateTime: process.env.DAILY_REPORT_UPDATE_TIME,
 }

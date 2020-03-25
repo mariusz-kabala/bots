@@ -57,7 +57,7 @@ async function runBot(): Promise<void> {
 
   await driver.subscribeToMessages()
 
-  cron.schedule('00 20 09 * * 1-5', async () => {
+  cron.schedule(config.get<string>('dailyReportUpdateTime'), async () => {
     logger.log({
       level: 'info',
       message: `Sending daily report to the channel`,
