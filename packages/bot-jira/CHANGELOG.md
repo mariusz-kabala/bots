@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0](https://github.com/mariusz-kabala/bots/compare/@bots/jira@0.2.0...@bots/jira@0.3.0) (2020-03-25)
+
+
+### Features
+
+* add more logs about reporting ([f8fac36](https://github.com/mariusz-kabala/bots/commit/f8fac367e6e08cafa533afe2e021bdc497115272))
+
+
+
+
+
 # [0.2.0](https://github.com/mariusz-kabala/bots/compare/@bots/jira@0.1.1...@bots/jira@0.2.0) (2020-03-25)
 
 
