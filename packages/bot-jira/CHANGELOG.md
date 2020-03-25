@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0](https://github.com/mariusz-kabala/bots/compare/@bots/jira@0.4.0...@bots/jira@0.5.0) (2020-03-25)
+
+
+### Features
+
+* move daily report channels to config ([0982a6f](https://github.com/mariusz-kabala/bots/commit/0982a6fe91072200b11cddda35de07435cb59036))
+
+
+
+
+
 # [0.4.0](https://github.com/mariusz-kabala/bots/compare/@bots/jira@0.3.0...@bots/jira@0.4.0) (2020-03-25)
 
 
