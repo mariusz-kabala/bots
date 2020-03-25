@@ -87,6 +87,7 @@
     "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-typescript": "^1.0.1",
     "rollup-plugin-typescript2": "^0.25.3",
+    "@rollup/plugin-json": "^4.0.2",
     "ts-jest": "^24.2.0",
     "typescript": "^3.7.3"
   }

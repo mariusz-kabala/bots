@@ -4,6 +4,6 @@ WORKDIR /usr/src/app
 
 COPY . .
 
-RUN yarn && yarn workspace @bots/jira build
+RUN yarn && yarn workspaces run prepare && yarn workspace @bots/jira build
 
 CMD [ "yarn", "workspace", "@bots/jira", "start" ]

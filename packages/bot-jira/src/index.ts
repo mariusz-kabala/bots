@@ -3,7 +3,7 @@ import { driver } from '@rocket.chat/sdk'
 import { logger } from '@libs/logger'
 import { IRCMessage } from '@libs/types'
 import { splitText } from '@libs/tools'
-import { CronJob } from 'cron'
+import * as cron from 'node-cron'
 
 import { processMessages } from './processMessages'
 import { reportCommand } from './commands/report'
@@ -57,13 +57,10 @@ async function runBot(): Promise<void> {
 
   await driver.subscribeToMessages()
 
-  const dailyReportsJob = new CronJob('00 05 09 * * 1-5', async () => {
+  cron.schedule('00 05 09 * * 1-5', async () => {
     const report = await reportCommand()
-    const roomname = await driver.getRoomId('N8nNfiAAzFkbh3jye')
-    await driver.sendToRoomId(report, roomname)
+    await driver.sendToRoomId(report, 'N8nNfiAAzFkbh3jye')
   })
-
-  dailyReportsJob.start()
 
   try {
     // eslint-disable-next-line

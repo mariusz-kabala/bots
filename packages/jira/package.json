@@ -12,10 +12,6 @@
   },
   "dependencies": {
     "@libs/logger": "0.1.1",
-    "@libs/markdown": "0.1.1",
-    "cron": "^1.8.2"
-  },
-  "devDependencies": {
-    "@types/cron": "^1.7.2"
+    "@libs/markdown": "0.1.1"
   }
 }
