@@ -20,11 +20,31 @@ export function buildQuery(params: IJQLParams): string {
   }
 
   if (created) {
-    query += ` AND created > ${created}`
+    switch (created) {
+      case 'today':
+        query += ` created >= startOfDay() and created < endOfDay()`
+        break
+      case 'yesterday':
+        query += ' created < -1d AND created > -2d'
+        break
+      default:
+        query += ` AND created > ${created}`
+        break
+    }
   }
 
   if (updated) {
-    query += ` AND updated > ${updated}`
+    switch (updated) {
+      case 'today':
+        query += ` AND updated >= startOfDay() AND updated < endOfDay()`
+        break
+      case 'yesterday':
+        query += ' AND updated < -1d AND updated > -2d'
+        break
+      default:
+        query += ` AND updated > ${updated}`
+        break
+    }
   }
 
   query += ' ORDER BY issuetype ASC, createdDate DESC'

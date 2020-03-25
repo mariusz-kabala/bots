@@ -10,7 +10,7 @@ export function printIssues(
   let result = ''
 
   for (const issue of issues.slice(0, printedIssuesLimit)) {
-    result += `\n${formatIssue(issue, {
+    result += `\n${issue.subtasks ? ':mega: ' : ''}${formatIssue(issue, {
       showAssign,
       showParent,
       host: config.get<string>('JiraHost'),
@@ -28,5 +28,5 @@ export function printIssues(
     }
   }
 
-  return result
+  return result ? result : 'No results :('
 }

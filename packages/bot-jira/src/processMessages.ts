@@ -6,6 +6,7 @@ import { statusCommand } from './commands/status'
 import { createCommand } from './commands/create'
 import { updateCommand } from './commands/update'
 import { sprintCommand } from './commands/sprint'
+import { reportCommand } from './commands/report'
 
 const meReg = /\b(me|mine|i|my)\b/gi
 
@@ -18,6 +19,10 @@ export function processMessages(message: IRCMessage): Promise<string> {
 
   if (msg.includes('status')) {
     return statusCommand(msg)
+  }
+
+  if (msg.includes('report')) {
+    return reportCommand()
   }
 
   if (msg.includes('sprint')) {

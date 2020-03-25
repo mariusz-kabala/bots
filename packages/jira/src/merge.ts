@@ -16,7 +16,7 @@ export function mergeIssues(issues: IJiraIssue[]) {
     if (parent) {
       let parentIndex: number
 
-      if (storiesMapper[parent.key]) {
+      if (typeof storiesMapper[parent.key] !== 'undefined') {
         parentIndex = storiesMapper[parent.key]
       } else {
         parentIndex = results.push(parent as IJiraIssue) - 1
@@ -28,10 +28,11 @@ export function mergeIssues(issues: IJiraIssue[]) {
       }
 
       results[parentIndex].subtasks?.push(issue)
+      storiesMapper[issue.key] = 99999999
       continue
     }
 
-    results.push(issue)
+    storiesMapper[issue.key] = results.push(issue) - 1
   }
 
   return results

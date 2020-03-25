@@ -1,7 +1,8 @@
-import { IJQLParams, ISSUE_STATUS, TIME_FIELDS, jira, buildQuery, formatIssue } from '@libs/jira'
+import { IJQLParams, ISSUE_STATUS, TIME_FIELDS, jira, buildQuery, mergeIssues } from '@libs/jira'
 import config from 'config'
 import { logger } from '@libs/logger'
 
+import { printIssues } from '../helpers/printIssues'
 import { statusesMapper } from '../constants'
 
 type IMapper = {
@@ -10,9 +11,9 @@ type IMapper = {
 
 const timeMapper: IMapper = {
   '-7d': ['week'],
-  '-1d': ['today'],
-  '-2d': ['yesterday'],
 }
+
+const specialTimeMapper: string[] = ['today', 'yesterday']
 
 const timeFieldMapper: IMapper = {
   [TIME_FIELDS.created]: ['created'],
@@ -32,9 +33,11 @@ function getTimeFields(msg: string): Partial<IJQLParams> {
   }
 
   const time = Object.keys(timeMapper).find(timeValue => timeMapper[timeValue].some((txt: string) => msg.includes(txt)))
-
+  const specialTime = specialTimeMapper.find((txt: string) => msg.includes(txt))
   if (time) {
     result[timeField] = time
+  } else if (specialTime) {
+    result[timeField] = specialTime
   } else {
     const reg = /([0-9]+)(.+day(s?))/.exec(msg)
 
@@ -60,6 +63,10 @@ export function getParams(msg: string): IJQLParams {
     params.status = [ISSUE_STATUS.done, ISSUE_STATUS.closed]
   }
 
+  if (params.status === ISSUE_STATUS.open) {
+    params.status = [ISSUE_STATUS.open, ISSUE_STATUS.selectForDevelopment]
+  }
+
   const user = Object.keys(users).find(user => msg.includes(user))
 
   if (user) {
@@ -79,13 +86,5 @@ export async function showCommand(msg: string): Promise<string> {
 
   const data = await jira.searchJira(buildQuery(params))
 
-  let response = ''
-
-  for (const issue of data.issues) {
-    response += `${formatIssue(issue, {
-      host: config.get<string>('JiraHost'),
-    })}\n`
-  }
-
-  return response
+  return printIssues(mergeIssues(data.issues), typeof params.user === 'undefined', 99, true)
 }

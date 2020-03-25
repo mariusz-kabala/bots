@@ -3,6 +3,8 @@ export enum ISSUE_STATUS {
   inProgress = 'In progress',
   done = 'Done',
   closed = 'Closed',
+  open = 'Open',
+  selectForDevelopment = '"Selected for Development"',
 }
 
 export enum ISSUE_TYPES {

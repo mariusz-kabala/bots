@@ -10,4 +10,7 @@ export const statusesMapper: IStatusMapper = {
   [ISSUE_STATUS.backlog]: ['backlog'],
   [ISSUE_STATUS.inProgress]: ['progress', 'work', 'working', 'doing'],
   [ISSUE_STATUS.done]: ['done', 'did', 'finished', 'closed'],
+  [ISSUE_STATUS.closed]: [],
+  [ISSUE_STATUS.open]: ['open', 'new'],
+  [ISSUE_STATUS.selectForDevelopment]: [],
 }

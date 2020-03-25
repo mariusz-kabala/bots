@@ -1,4 +1,5 @@
 import { sortedIssues } from '@libs/jira'
+
 import { printIssues } from './printIssues'
 
 export function generateReport(sorted: sortedIssues, showAssign = false, printedIssuesLimit = 10) {
