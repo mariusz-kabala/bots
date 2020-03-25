@@ -1,6 +1,6 @@
 {
   "name": "@bots/github",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "private": true,
   "main": "./dist/index.js",
   "scripts": {
@@ -12,10 +12,10 @@
     "prepare": "yarn build && yarn build-declarations"
   },
   "dependencies": {
-    "@libs/logger": "0.1.1",
-    "@libs/markdown": "0.1.1",
-    "@libs/tools": "0.1.1",
-    "@libs/types": "0.1.0",
+    "@libs/logger": "0.2.0",
+    "@libs/markdown": "0.2.0",
+    "@libs/tools": "0.2.0",
+    "@libs/types": "0.2.0",
     "github-api": "^3.3.0"
   }
 }

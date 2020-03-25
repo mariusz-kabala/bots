@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0](https://github.com/mariusz-kabala/bots/compare/@libs/markdown@0.1.1...@libs/markdown@0.2.0) (2020-03-25)
+
+
+### Features
+
+* add sprint and reporting commands ([742261f](https://github.com/mariusz-kabala/bots/commit/742261fe81c43ecccd28921b3da94c46eccd895f))
+* very basic support for sprint command in jirabot ([d46d9ac](https://github.com/mariusz-kabala/bots/commit/d46d9ac1b3c46530c6508ec8469016a27d8d9b88))
+
+
+
+
+
 ## [0.1.1](https://github.com/mariusz-kabala/bots/compare/@libs/markdown@0.1.0...@libs/markdown@0.1.1) (2020-01-01)
 
 **Note:** Version bump only for package @libs/markdown
